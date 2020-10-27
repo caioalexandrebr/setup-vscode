@@ -1,0 +1,16 @@
+[
+  {
+    "key": "alt+;",
+    "command": "editor.action.commentLine",
+    "when": "editorTextFocus && !editorReadonly"
+  },
+  {
+    "key": "alt+9",
+    "command": "sortLines.sortLines",
+    "when": "editorTextFocus"
+  },
+  {
+    "key": "alt+8",
+    "command": "trailing-spaces.deleteTrailingSpaces"
+  }
+]
