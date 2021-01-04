@@ -2,11 +2,12 @@
 
 ### Extensions:
 
+- **[Auto Rename Tag](https://marketplace.visualstudio.com/items?itemName=formulahendry.auto-rename-tag)**
 - **[Color Highlight](https://marketplace.visualstudio.com/items?itemName=naumovs.color-highlight)**
 - **[DotENV](https://marketplace.visualstudio.com/items?itemName=mikestead.dotenv)**
 - **[Dracula](https://marketplace.visualstudio.com/items?itemName=dracula-theme.theme-dracula)**
-- **[EditorConfig](https://marketplace.visualstudio.com/items?itemName=EditorConfig.EditorConfig)**
 - **[ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)**
+- **[EditorConfig](https://marketplace.visualstudio.com/items?itemName=EditorConfig.EditorConfig)**
 - **[GitLens](https://marketplace.visualstudio.com/items?itemName=eamodio.gitlens)**
 - **[Material Icon Theme](https://marketplace.visualstudio.com/items?itemName=PKief.material-icon-theme)**
 - **[Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)**

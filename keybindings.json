@@ -12,5 +12,10 @@
   {
     "key": "alt+8",
     "command": "trailing-spaces.deleteTrailingSpaces"
+  },
+  {
+    "key": "alt+d",
+    "command": "editor.action.deleteLines",
+    "when": "textInputFocus && !editorReadonly"
   }
 ]
