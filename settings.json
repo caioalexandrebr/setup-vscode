@@ -13,11 +13,11 @@
   "editor.fontLigatures": true,
 
   "files.exclude": {
-    "**/.git": true,
-    "**/.svn": true,
-    "**/.hg": true,
-    "**/CVS": true,
     "**/.DS_Store": true,
+    "**/.git": true,
+    "**/.hg": true,
+    "**/.svn": true,
+    "**/CVS": true,
     "node_modules": true
   },
 
@@ -40,13 +40,16 @@
     "source.fixAll.eslint": true
   },
 
+  "search.exclude": {
+    "**/.next": true,
+    "**/coverage": true,
+  },
+
   "files.associations": {
     ".sequelizerc": "javascript",
     ".stylelintrc": "json",
     ".prettierrc": "json"
   },
-
-  "window.zoomLevel": 0,
 
   "emmet.syntaxProfiles": { "javascript": "jsx" },
   "emmet.includeLanguages": { "javascript": "javascriptreact" },
@@ -65,5 +68,20 @@
   "screencastMode.onlyKeyboardShortcuts": true,
   "[jsonc]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
-  }
+  },
+  "gitlens.defaultDateFormat": null,
+  "codeswing.layout": "grid",
+  "[javascriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "tabnine.experimentalAutoImports": true,
+  "gitlens.advanced.messages": {
+    "suppressGitMissingWarning": true
+  },
+  "diffEditor.wordWrap": "on",
+  "editor.accessibilitySupport": "off",
+  "prettier.proseWrap": "always"
 }
