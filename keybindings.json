@@ -17,5 +17,10 @@
     "key": "alt+d",
     "command": "editor.action.deleteLines",
     "when": "textInputFocus && !editorReadonly"
+  },
+  {
+    "key": "alt+c",
+    "command": "extension.clog",
+    "when": "editorTextFocus"
   }
 ]
