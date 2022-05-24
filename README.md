@@ -3,7 +3,7 @@
 ### Extensions:
 
 - **[Auto Rename Tag](https://marketplace.visualstudio.com/items?itemName=formulahendry.auto-rename-tag)**
-- **[Bracket Pair Colorizer](https://marketplace.visualstudio.com/items?itemName=CoenraadS.bracket-pair-colorizer)**
+- **[Bracket Pair Colorizer](https://marketplace.visualstudio.com/items?itemName=CoenraadS.bracket-pair-colorizer-2)**
 - **[Color Highlight](https://marketplace.visualstudio.com/items?itemName=naumovs.color-highlight)**
 - **[Console Log](https://marketplace.visualstudio.com/items?itemName=Luis.console-log)**
 - **[DotENV](https://marketplace.visualstudio.com/items?itemName=mikestead.dotenv)**
