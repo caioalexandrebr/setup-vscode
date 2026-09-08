@@ -1,4 +1,3 @@
-anthropic.claude-code
 codeandstuff.package-json-upgrade
 dbaeumer.vscode-eslint
 dracula-theme.theme-dracula
