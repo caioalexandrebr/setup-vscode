@@ -1,13 +1,10 @@
 # ~/.config/fish/local.fish — machine-specific, NOT in git
 #
 # Copy to ~/.config/fish/local.fish and fill in. Sourced at the end of
-# config.fish, so it can override anything there. Counterpart of
-# ~/.zshrc.local on macOS.
+# config.fish, so it can override anything there. Counterpart of ~/.zshrc.local.
 #
-# Environment variables are deliberately NOT mirrored between machines: they are
-# on-demand, per-machine facts. The macOS box has Java, Go, the Android SDK and
-# aws-vault; this one has none of them, so none of that appears here. Add what
-# this machine actually needs, nothing more.
+# Env vars are per-machine on purpose: the Mac has Java, Go, the Android SDK and
+# aws-vault; this box has none of them. Add only what this machine actually has.
 
 # ------------------------------------------------------------------- basics ---
 fish_add_path "$HOME/bin"

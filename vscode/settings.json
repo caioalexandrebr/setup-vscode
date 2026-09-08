@@ -63,6 +63,10 @@
   "files.trimFinalNewlines": true,
   "files.trimTrailingWhitespace": true,
   // Explorer
+  // Open Editors hidden via settings. Timeline and Outline have no equivalent
+  // setting — hide them with right-click on the Explorer header; that lives in
+  // VS Code's UI state, so it does not travel with this repo.
+  "explorer.openEditors.visible": 0,
   "explorer.compactFolders": false,
   "explorer.confirmDelete": false,
   "explorer.confirmDragAndDrop": false,
@@ -85,8 +89,7 @@
   "terminal.integrated.defaultProfile.windows": "PowerShell",
   "terminal.integrated.profiles.linux": {
     "fish": {
-      "path": "fish",
-      "icon": "terminal"
+      "path": "fish"
     },
     "zsh": {
       "path": "zsh"
@@ -143,22 +146,12 @@
   "update.showReleaseNotes": false,
   "extensions.ignoreRecommendations": true,
   // AI assistants
-  // Claude runs in the desktop app, not in the editor — no extension settings
-  // here. The chat.* keys below are VS Code's own built-in chat.
-  "chat.editing.alwaysSaveWithGeneratedChanges": true,
-  "chat.viewWelcome.enabled": false,
-  "chat.viewSessions.enabled": false,
-  "chat.viewSessions.orientation": "stacked",
-  "chat.tools.terminal.autoApprove": {
-    "yarn add": true,
-    "yarn test": true
-  },
-  "chat.tools.urls.autoApprove": {
-    "https://www.npmjs.com": {
-      "approveRequest": true,
-      "approveResponse": false
-    }
-  },
+  // Claude runs in the desktop app, Copilot is unused — so VS Code's built-in
+  // chat is switched off entirely. This removes the Chat button from the title
+  // bar and the Chat view from the activity bar, and makes every other chat.*
+  // setting moot. Flip to false to get the whole chat UI back.
+  // Requires VS Code 1.99+.
+  "chat.disableAIFeatures": true,
   "cursor.general.disableHttp2": true,
   "cursor.composer.shouldChimeAfterChatFinishes": true
 }

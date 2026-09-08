@@ -52,17 +52,8 @@ near-empty — see the note in that file.
 
 ## Deliberately NOT shared
 
-**No environment variables are shared between machines.** They are on-demand,
-per-machine facts — the macOS box has Java, Go, the Android SDK and aws-vault;
-the WSL box has none of them. Mirroring them would only mean carrying `export`
-lines that point at directories that do not exist. Each machine's local file
-declares what that machine actually has.
-
-| Thing | Where it lives | Why |
-| --- | --- | --- |
-| Every `export` / `set -gx` | local file | on-demand per machine, see above |
-| Node version manager | local file | `nvm` on macOS, `fnm` on WSL — different tools, different init |
-| Prompt / theme | local (`ZSH_THEME`, `fish_variables`) | each shell keeps its own theme, by choice |
-| Homebrew, GOROOT, Android SDK, openjdk, `AWS_VAULT_BACKEND` | local file (macOS) | macOS-only, absent on WSL |
-| `python` alias | local file (macOS) | macOS-only |
-| Secrets (`GCHAT_PR_WEBHOOK_URL`, `MEP_CMS_STAGING_MCP_TOKEN`) | local file, gitignored | never commit these |
+Every `export` / `set -gx`, the Node manager and the prompt. See
+[the README](../README.md#how-the-two-shells-stay-in-sync) for the reasoning —
+short version: environment variables are per-machine facts, so they live in the
+gitignored local file (`~/.zshrc.local`, `~/.config/fish/local.fish`) alongside
+the secrets.

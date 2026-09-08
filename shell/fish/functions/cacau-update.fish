@@ -1,10 +1,6 @@
-# Updates the Cacau plugin end to end: marketplace catalog, plugin itself, then
-# drops every cached version except the active one. Replaces the deprecated
-# symlink-into-mep-docs flow — do not re-add links under ~/.claude/skills, they
-# resurface every skill a second time without the cacau: prefix.
-#
-# Port of the zsh function in shell/zsh/.zshrc. `[[ ]]` and `${dir:t}` are
-# zsh-only, so this is a rewrite rather than a copy — keep both in sync.
+# Port of the zsh function in shell/zsh/.zshrc — see there for what it does and
+# why. `[[ ]]` and `${dir:t}` are zsh-only, so this is a rewrite, not a copy:
+# keep the two in sync.
 function cacau-update --description 'Update the Cacau Claude Code plugin and prune stale caches'
     if not command -q claude
         echo "cacau-update: claude CLI not found in PATH"

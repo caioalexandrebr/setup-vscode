@@ -13,9 +13,12 @@ REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 DRY_RUN=0
 [[ "${1:-}" == "--dry-run" ]] && DRY_RUN=1
 
-say()  { printf '\033[1;34m==>\033[0m %s\n' "$*"; }
-warn() { printf '\033[1;33m!!\033[0m %s\n' "$*"; }
-run()  { if (( DRY_RUN )); then printf '   would run: %s\n' "$*"; else "$@"; fi; }
+# All progress output goes to stderr: these functions are called from inside
+# command substitutions, and on stdout their text would be captured as a value.
+say()  { printf '\033[1;34m==>\033[0m %s\n' "$*" >&2; }
+warn() { printf '\033[1;33m!!\033[0m %s\n'  "$*" >&2; }
+die()  { warn "$*"; exit 1; }
+run()  { if (( DRY_RUN )); then printf '   would run: %s\n' "$*" >&2; else "$@"; fi; }
 
 # --------------------------------------------------------------- platform ---
 detect_platform() {
@@ -30,12 +33,13 @@ detect_platform() {
 }
 PLATFORM="$(detect_platform)"
 say "Platform: $PLATFORM"
-[[ "$PLATFORM" == unknown ]] && { warn "Unsupported platform, aborting."; exit 1; }
+[[ "$PLATFORM" == unknown ]] && die "Unsupported platform, aborting."
 
 # ------------------------------------------------------------ link helper ---
 link() {
   local src="$1" dest="$2"
-  run mkdir -p "$(dirname "$dest")"
+  local dir; dir="$(dirname "$dest")"
+  [[ -d "$dir" ]] || run mkdir -p "$dir"
   if [[ -L "$dest" ]]; then
     run rm "$dest"
   elif [[ -e "$dest" ]]; then
@@ -43,38 +47,43 @@ link() {
     run mv "$dest" "$dest.bak"
   fi
   run ln -s "$src" "$dest"
-  say "linked $dest -> $src"
+  (( DRY_RUN )) || say "linked $dest -> $src"
 }
 
 # ------------------------------------------------- vs code settings target ---
 # On WSL, the User settings dir depends on where VS Code actually runs:
 #   - Windows-side VS Code + Remote-WSL  -> /mnt/c/Users/<user>/AppData/Roaming/Code/User
 #   - VS Code Server inside the distro   -> ~/.vscode-server/data/Machine
-vscode_user_dir() {
+# Sets VSCODE_DIR rather than echoing it: a command substitution would run this
+# in a subshell, where `die` could not stop the script and any stray stdout
+# would end up inside the path.
+VSCODE_DIR=""
+set_vscode_user_dir() {
   case "$PLATFORM" in
-    macos) echo "$HOME/Library/Application Support/Code/User" ;;
-    linux) echo "$HOME/.config/Code/User" ;;
+    macos) VSCODE_DIR="$HOME/Library/Application Support/Code/User" ;;
+    linux) VSCODE_DIR="$HOME/.config/Code/User" ;;
     wsl)
-      echo "Where does VS Code read its settings from?" >&2
-      echo "  1) Windows-side VS Code (Remote-WSL)  [default]" >&2
-      echo "  2) VS Code Server inside this distro" >&2
-      read -rp "  choice [1]: " choice >&2
+      say "Where does VS Code read its settings from?"
+      say "  1) Windows-side VS Code (Remote-WSL)  [default]"
+      say "  2) VS Code Server inside this distro"
+      local choice guess winuser
+      read -rp "  choice [1]: " choice
       if [[ "${choice:-1}" == "2" ]]; then
-        echo "$HOME/.vscode-server/data/Machine"
+        VSCODE_DIR="$HOME/.vscode-server/data/Machine"
       else
-        local guess winuser
         # cmd.exe is the reliable way to read the Windows username from WSL.
         guess="$(cmd.exe /c 'echo %USERNAME%' 2>/dev/null | tr -d '\r\n' || true)"
-        read -rp "  Windows username [${guess}]: " winuser >&2
+        read -rp "  Windows username [${guess}]: " winuser
         winuser="${winuser:-$guess}"
-        [[ -z "$winuser" ]] && { warn "No Windows username given."; exit 1; }
-        echo "/mnt/c/Users/$winuser/AppData/Roaming/Code/User"
+        [[ -n "$winuser" ]] || die "No Windows username given."
+        VSCODE_DIR="/mnt/c/Users/$winuser/AppData/Roaming/Code/User"
       fi
       ;;
   esac
+  [[ -n "$VSCODE_DIR" ]] || die "Could not determine the VS Code User directory."
 }
 
-VSCODE_DIR="$(vscode_user_dir)"
+set_vscode_user_dir
 say "VS Code User dir: $VSCODE_DIR"
 link "$REPO/vscode/settings.json"    "$VSCODE_DIR/settings.json"
 link "$REPO/vscode/keybindings.json" "$VSCODE_DIR/keybindings.json"
@@ -82,9 +91,10 @@ link "$REPO/vscode/keybindings.json" "$VSCODE_DIR/keybindings.json"
 # ------------------------------------------------------------- extensions ---
 if command -v code >/dev/null 2>&1; then
   say "Installing extensions from vscode/extensions.txt"
-  while read -r ext; do
+  while read -r ext || [[ -n "$ext" ]]; do
     [[ -z "$ext" || "$ext" == \#* ]] && continue
-    run code --install-extension "$ext" --force
+    # `|| warn` so one unavailable extension does not abort the whole install.
+    run code --install-extension "$ext" --force || warn "failed: $ext"
   done < "$REPO/vscode/extensions.txt"
 else
   warn "\`code\` not on PATH — skipping extensions."
