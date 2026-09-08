@@ -96,8 +96,6 @@ Both are gitignored and sourced last, so they can override anything. Secrets
 
 | Extension | What for |
 | --- | --- |
-| [Claude Code](https://marketplace.visualstudio.com/items?itemName=anthropic.claude-code) | AI assistant, docked in the panel |
-| [Builder](https://marketplace.visualstudio.com/items?itemName=builder.builder) | Wellhub internal tooling |
 | [package-json-upgrade](https://marketplace.visualstudio.com/items?itemName=codeandstuff.package-json-upgrade) | inline dependency update hints |
 | [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint) | linting, `fixAll` on save |
 | [Dracula](https://marketplace.visualstudio.com/items?itemName=dracula-theme.theme-dracula) | color theme |
