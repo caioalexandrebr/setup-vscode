@@ -63,10 +63,10 @@
   "files.trimFinalNewlines": true,
   "files.trimTrailingWhitespace": true,
   // Explorer
-  // Open Editors hidden via settings. Timeline and Outline have no equivalent
-  // setting — hide them with right-click on the Explorer header; that lives in
-  // VS Code's UI state, so it does not travel with this repo.
-  "explorer.openEditors.visible": 0,
+  // Open Editors, Timeline and Outline cannot be hidden from settings.
+  // `explorer.openEditors.visible` has minimum: 1, so 0 is silently ignored —
+  // hide all three with right-click on the Explorer header. That is UI state in
+  // globalStorage, so it does not travel with this repo: redo it per machine.
   "explorer.compactFolders": false,
   "explorer.confirmDelete": false,
   "explorer.confirmDragAndDrop": false,
