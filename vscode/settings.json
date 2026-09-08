@@ -142,9 +142,9 @@
   // Updates / Extensions
   "update.showReleaseNotes": false,
   "extensions.ignoreRecommendations": true,
-  // AI assistants (Claude Code / Cursor)
-  // Harmless on a machine where the extension is not installed.
-  "claudeCode.preferredLocation": "panel",
+  // AI assistants
+  // Claude runs in the desktop app, not in the editor — no extension settings
+  // here. The chat.* keys below are VS Code's own built-in chat.
   "chat.editing.alwaysSaveWithGeneratedChanges": true,
   "chat.viewWelcome.enabled": false,
   "chat.viewSessions.enabled": false,
