@@ -1,0 +1,166 @@
+// VS Code — user settings
+//
+// Cross-platform: valid on macOS, Linux and Windows/WSL. Platform-specific keys
+// are always declared for every platform side by side — VS Code silently ignores
+// the ones that do not apply to the host it is running on.
+{
+  // Editor
+  "editor.fontSize": 12,
+  "editor.fontFamily": "Fira Code",
+  "editor.fontLigatures": true,
+  "editor.lineHeight": 1.8,
+  "editor.tabSize": 2,
+  "editor.rulers": [
+    80,
+    120
+  ],
+  "editor.wordWrap": "on",
+  "editor.minimap.enabled": false,
+  "editor.renderLineHighlight": "gutter",
+  "editor.hideCursorInOverviewRuler": true,
+  "editor.semanticHighlighting.enabled": false,
+  "editor.parameterHints.enabled": false,
+  "editor.acceptSuggestionOnCommitCharacter": false,
+  "editor.suggestSelection": "first",
+  "editor.accessibilitySupport": "off",
+  "editor.linkedEditing": true,
+  "editor.smoothScrolling": true,
+  "editor.stickyScroll.enabled": true,
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  },
+  // Workbench
+  "workbench.colorTheme": "Dracula Theme",
+  "workbench.iconTheme": "material-icon-theme",
+  "workbench.startupEditor": "newUntitledFile",
+  "workbench.editor.labelFormat": "short",
+  "workbench.editor.empty.hint": "hidden",
+  "workbench.statusBar.visible": false,
+  "workbench.list.smoothScrolling": true,
+  "workbench.activityBar.location": "top",
+  "workbench.editorAssociations": {
+    "*.copilotmd": "vscode.markdown.preview.editor",
+    "*.html": "default"
+  },
+  // Window
+  "window.commandCenter": false,
+  "window.autoDetectColorScheme": false,
+  // Files
+  "files.associations": {
+    ".env.*": "dotenv",
+    ".prettierrc": "json"
+  },
+  "files.exclude": {
+    "**/CVS": true,
+    "**/.DS_Store": true,
+    "**/.hg": true,
+    "**/.svn": true,
+    "**/.git": true
+  },
+  "files.insertFinalNewline": true,
+  "files.trimFinalNewlines": true,
+  "files.trimTrailingWhitespace": true,
+  // Explorer
+  "explorer.compactFolders": false,
+  "explorer.confirmDelete": false,
+  "explorer.confirmDragAndDrop": false,
+  "explorer.excludeGitIgnore": false,
+  "explorer.sortOrder": "foldersNestsFiles",
+  "explorer.fileNesting.enabled": true,
+  "explorer.fileNesting.patterns": {
+    "package.json": ".eslint*, prettier*, .prettier*, .editorconfig, .lint*, .nvmrc, .npmrc, babel*, commitlint*, jest*, tsup*, yarn.lock, .gitignore, tsconfig*, vite*, pnpm-lock*, bun.lockb, nest*, tailwind.config*, postcss.config*, esbuild*, eslint*, .vscodeignore, .taprc, .npmignore, .gitattributes, LICENSE, next.config.ts, next-env.d.ts, nx.json, knip*, .yarn*, project.json, .docker*, docker*, Docker*",
+    ".env": ".env*",
+    "README.md": "AGENTS.md"
+  },
+  // Terminal
+  // One default profile per platform: zsh on macOS, fish on Linux/WSL.
+  // See shell/ in this repo for the matching shell configuration.
+  "terminal.integrated.fontFamily": "Fira Code",
+  "terminal.integrated.gpuAcceleration": "off",
+  "terminal.integrated.showExitAlert": false,
+  "terminal.integrated.defaultProfile.osx": "zsh",
+  "terminal.integrated.defaultProfile.linux": "fish",
+  "terminal.integrated.defaultProfile.windows": "PowerShell",
+  "terminal.integrated.profiles.linux": {
+    "fish": {
+      "path": "fish",
+      "icon": "terminal"
+    },
+    "zsh": {
+      "path": "zsh"
+    },
+    "bash": {
+      "path": "bash"
+    }
+  },
+  // Breadcrumbs / Diff
+  "breadcrumbs.enabled": false,
+  "diffEditor.ignoreTrimWhitespace": true,
+  // Git & GitLens
+  "git.enableSmartCommit": true,
+  "git.confirmSync": false,
+  "git.autofetch": true,
+  "git.openRepositoryInParentFolders": "always",
+  "gitlens.codeLens.enabled": false,
+  "gitlens.advanced.messages": {
+    "suppressIntegrationRequestTimedOutWarning": true
+  },
+  // Emmet (JSX)
+  "emmet.includeLanguages": {
+    "javascript": "javascriptreact"
+  },
+  "emmet.syntaxProfiles": {
+    "javascript": "jsx"
+  },
+  // JavaScript / TypeScript
+  "javascript.suggest.autoImports": true,
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  "typescript.suggest.autoImports": true,
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "typescript.tsserver.log": "off",
+  "typescript.enablePromptUseWorkspaceTsdk": true,
+  // ESLint
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact",
+    "graphql"
+  ],
+  // Language-specific formatters (only those that differ from the global Prettier)
+  "[json]": {
+    "editor.defaultFormatter": "vscode.json-language-features"
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "vscode.json-language-features"
+  },
+  // Security
+  "security.workspace.trust.untrustedFiles": "newWindow",
+  "security.promptForLocalFileProtocolHandling": false,
+  // Updates / Extensions
+  "update.showReleaseNotes": false,
+  "extensions.ignoreRecommendations": true,
+  // AI assistants (Claude Code / Cursor)
+  // Harmless on a machine where the extension is not installed.
+  "claudeCode.preferredLocation": "panel",
+  "chat.editing.alwaysSaveWithGeneratedChanges": true,
+  "chat.viewWelcome.enabled": false,
+  "chat.viewSessions.enabled": false,
+  "chat.viewSessions.orientation": "stacked",
+  "chat.tools.terminal.autoApprove": {
+    "yarn add": true,
+    "yarn test": true
+  },
+  "chat.tools.urls.autoApprove": {
+    "https://www.npmjs.com": {
+      "approveRequest": true,
+      "approveResponse": false
+    }
+  },
+  "cursor.general.disableHttp2": true,
+  "cursor.composer.shouldChimeAfterChatFinishes": true,
+  // Work-specific extensions (Wellhub Builder) — no-op elsewhere
+  "builder.allowSelfSignedCertificates": "Yes"
+}

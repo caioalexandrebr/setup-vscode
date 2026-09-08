@@ -1,0 +1,44 @@
+// VS Code — keybindings
+//
+// Cross-platform: `key` is the Linux/Windows binding, `mac` overrides it on
+// macOS. Entries with no `mac` use the same chord everywhere (VS Code maps
+// `alt` to Option on macOS).
+[
+  {
+    "key": "alt+;",
+    "command": "editor.action.commentLine",
+    "when": "editorTextFocus && !editorReadonly"
+  },
+  {
+    "key": "alt+9",
+    "command": "sortLines.sortLines",
+    "when": "editorTextFocus"
+  },
+  {
+    "key": "alt+8",
+    "command": "trailing-spaces.deleteTrailingSpaces"
+  },
+  {
+    "key": "alt+d",
+    "command": "editor.action.deleteLines",
+    "when": "textInputFocus && !editorReadonly"
+  },
+  {
+    "key": "alt+c",
+    "command": "extension.clog",
+    "when": "editorTextFocus"
+  },
+  // CodeSwing: remap run off shift+cmd+b, which collides with the build task.
+  {
+    "key": "ctrl+alt+b",
+    "mac": "alt+cmd+b",
+    "command": "codeswing.run",
+    "when": "codeswing:inSwing"
+  },
+  {
+    "key": "ctrl+shift+b",
+    "mac": "shift+cmd+b",
+    "command": "-codeswing.run",
+    "when": "codeswing:inSwing"
+  }
+]
