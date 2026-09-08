@@ -146,12 +146,10 @@
   "update.showReleaseNotes": false,
   "extensions.ignoreRecommendations": true,
   // AI assistants
-  // Claude runs in the desktop app, Copilot is unused — so VS Code's built-in
-  // chat is switched off entirely. This removes the Chat button from the title
-  // bar and the Chat view from the activity bar, and makes every other chat.*
-  // setting moot. Flip to false to get the whole chat UI back.
+  // Claude runs in the desktop app; Copilot and Cursor are not used at all — so
+  // VS Code's built-in chat is switched off entirely. This removes the Chat
+  // button from the title bar and the Chat view from the activity bar, and
+  // makes every other chat.* setting moot. Flip to false to get the UI back.
   // Requires VS Code 1.99+.
-  "chat.disableAIFeatures": true,
-  "cursor.general.disableHttp2": true,
-  "cursor.composer.shouldChimeAfterChatFinishes": true
+  "chat.disableAIFeatures": true
 }
