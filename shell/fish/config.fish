@@ -1,34 +1,24 @@
 # fish — WSL / Ubuntu
 #
-# Portable half of the shell setup. Everything machine-specific (fnm, paths,
-# secrets) lives in ~/.config/fish/local.fish, which is NOT in this repo.
-# The zsh counterpart is shell/zsh/.zshrc — keep the two in sync via
-# shell/aliases.md.
+# Portable half of the setup; the zsh counterpart is shell/zsh/.zshrc, kept in
+# sync via shell/aliases.md. Machine-specific paths and secrets go in
+# ~/.config/fish/local.fish, which is not in this repo.
 #
-# Note on plugins: fish ships autosuggestions and syntax highlighting natively,
-# so the two oh-my-zsh plugins used on macOS need nothing installed here. That
-# is the entire plugin overlap between the two shells.
+# Aliases live in conf.d/aliases.fish, which fish sources before this file.
+# Nothing here needs to load them.
 #
-# Theme stays per-shell on purpose: fish keeps whatever you set with
-# `fish_config`, stored in ~/.config/fish/fish_variables (machine-local, never
-# committed). zsh keeps robbyrussell.
+# Two things are per-shell on purpose: the prompt (fish keeps whatever
+# `fish_config` set, in the uncommitted fish_variables) and the Node manager
+# (fnm here, nvm on macOS). fish also ships autosuggestions and syntax
+# highlighting built in, so the two oh-my-zsh plugins need no counterpart.
 
-# Interactive-only setup. Keeps scripts and `fish -c` fast.
 if status is-interactive
-    # ------------------------------------------------------------- editor ---
     set -gx EDITOR "code -w"
-
-    # Greeting off — matches the bare prompt on macOS.
     set -g fish_greeting
 end
 
-# Aliases and paths are split into conf.d/, which fish sources automatically
-# before this file. Nothing to do here.
-
-# ------------------------------------------------------------------- local ---
-# Machine-specific paths, tool managers and secrets. Copy the example on a fresh
-# machine:  cp shell/fish/local.fish.example ~/.config/fish/local.fish
 # Sourced last so it can override anything above.
+# Fresh machine: cp shell/fish/local.fish.example ~/.config/fish/local.fish
 if test -f "$HOME/.config/fish/local.fish"
     source "$HOME/.config/fish/local.fish"
 end
