@@ -1,0 +1,10 @@
+# Fisher lockfile — run `fisher update` to install everything listed here.
+#
+# Intentionally empty of the macOS equivalents: fish ships autosuggestions and
+# syntax highlighting built in, so zsh-autosuggestions and
+# zsh-syntax-highlighting need no counterpart. The oh-my-zsh `git` plugin is not
+# ported either — conf.d/aliases.fish carries our own git aliases instead.
+#
+# Add a plugin here only when it has a real equivalent in the zsh setup, so the
+# two shells do not drift. Fisher itself is listed because it manages itself.
+jorgebucaran/fisher
