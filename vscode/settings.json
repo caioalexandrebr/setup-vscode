@@ -160,7 +160,5 @@
     }
   },
   "cursor.general.disableHttp2": true,
-  "cursor.composer.shouldChimeAfterChatFinishes": true,
-  // Work-specific extensions (Wellhub Builder) — no-op elsewhere
-  "builder.allowSelfSignedCertificates": "Yes"
+  "cursor.composer.shouldChimeAfterChatFinishes": true
 }
