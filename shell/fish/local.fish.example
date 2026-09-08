@@ -1,0 +1,34 @@
+# ~/.config/fish/local.fish — machine-specific, NOT in git
+#
+# Copy to ~/.config/fish/local.fish and fill in. Sourced at the end of
+# config.fish, so it can override anything there. Counterpart of
+# ~/.zshrc.local on macOS.
+#
+# Environment variables are deliberately NOT mirrored between machines: they are
+# on-demand, per-machine facts. The macOS box has Java, Go, the Android SDK and
+# aws-vault; this one has none of them, so none of that appears here. Add what
+# this machine actually needs, nothing more.
+
+# ------------------------------------------------------------------- basics ---
+fish_add_path "$HOME/bin"
+fish_add_path "$HOME/.local/bin"
+
+# ---------------------------------------------------------------- node (fnm) ---
+# WSL uses fnm; macOS uses nvm. Not shared on purpose — see shell/aliases.md.
+# `--use-on-cd` is fnm's built-in equivalent of the load-nvmrc hook on macOS:
+# it switches Node automatically when you cd into a dir with .nvmrc/.node-version.
+if command -q fnm
+    fnm env --use-on-cd --shell fish | source
+end
+
+# --------------------------------------------------------------- wsl interop ---
+# Only if `code` is not already on PATH. The Remote-WSL extension normally puts
+# a shim there for you, so try without this first.
+# fish_add_path "/mnt/c/Users/YOUR_WINDOWS_USER/AppData/Local/Programs/Microsoft VS Code/bin"
+
+# ------------------------------------------------------------------ secrets ---
+# Fill from your password manager. Never commit real values.
+# Google Chat webhook used by the git-pr-create skill.
+set -gx GCHAT_PR_WEBHOOK_URL ''
+# mep-cms staging MCP server bearer token.
+set -gx MEP_CMS_STAGING_MCP_TOKEN ''

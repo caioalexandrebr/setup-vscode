@@ -1,0 +1,7 @@
+# Machine-specific shell config — holds paths and secrets, never commit.
+.zshrc.local
+local.fish
+shell/fish/fish_variables
+
+# macOS
+.DS_Store

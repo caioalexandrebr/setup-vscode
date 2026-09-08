@@ -1,0 +1,15 @@
+anthropic.claude-code
+builder.builder
+codeandstuff.package-json-upgrade
+dbaeumer.vscode-eslint
+dracula-theme.theme-dracula
+dskwrk.vscode-generate-getter-setter
+eamodio.gitlens
+esbenp.prettier-vscode
+formulahendry.auto-rename-tag
+naumovs.color-highlight
+pkief.material-icon-theme
+shardulm94.trailing-spaces
+styled-components.vscode-styled-components
+tyriar.sort-lines
+usernamehw.errorlens

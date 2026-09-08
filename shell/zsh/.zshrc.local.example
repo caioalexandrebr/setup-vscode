@@ -1,0 +1,60 @@
+# ~/.zshrc.local — machine-specific, NOT in git
+#
+# Copy to ~/.zshrc.local and fill in. Sourced at the end of ~/.zshrc, so it can
+# override anything there. Everything in here is either macOS-only or a secret.
+
+# ------------------------------------------------------------------- basics ---
+export PATH="$HOME/bin:/usr/local/bin:$PATH"
+export PATH="$HOME/.local/bin:$PATH"
+
+# --------------------------------------------------------------- homebrew ---
+# Apple Silicon. On Intel Macs, Homebrew lives in /usr/local and this is a no-op.
+export PATH="/opt/homebrew/bin:$PATH"
+export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
+
+# ---------------------------------------------------------------- node (nvm) ---
+# macOS uses nvm; WSL uses fnm. Not shared on purpose — see shell/aliases.md.
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+
+# Auto `nvm use` when entering a directory with a .nvmrc.
+autoload -U add-zsh-hook
+load-nvmrc() {
+  local nvmrc_path
+  nvmrc_path="$(nvm_find_nvmrc)"
+  if [ -n "$nvmrc_path" ]; then
+    local nvmrc_node_version
+    nvmrc_node_version=$(nvm version "$(cat "${nvmrc_path}")")
+    if [ "$nvmrc_node_version" = "N/A" ]; then
+      nvm install
+    elif [ "$nvmrc_node_version" != "$(nvm version)" ]; then
+      nvm use
+    fi
+  elif [ -n "$(PWD=$OLDPWD nvm_find_nvmrc)" ] && [ "$(nvm version)" != "$(nvm version default)" ]; then
+    echo "Reverting to nvm default version"
+    nvm use default
+  fi
+}
+add-zsh-hook chpwd load-nvmrc
+load-nvmrc
+
+# ----------------------------------------------------------------------- go ---
+export GOROOT=/usr/local/go
+export PATH="$PATH:$HOME/go/bin:$GOROOT/bin"
+
+# ------------------------------------------------------------------ android ---
+export PATH="$HOME/Library/Android/sdk/platform-tools:$PATH"
+
+# ------------------------------------------------------------------- python ---
+alias python=/usr/bin/python3
+
+# ---------------------------------------------------------------------- aws ---
+export AWS_VAULT_BACKEND=file
+
+# ------------------------------------------------------------------ secrets ---
+# Fill from your password manager. Never commit real values.
+# Google Chat webhook used by the git-pr-create skill.
+export GCHAT_PR_WEBHOOK_URL=''
+# mep-cms staging MCP server bearer token.
+export MEP_CMS_STAGING_MCP_TOKEN=''
