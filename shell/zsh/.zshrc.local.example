@@ -53,8 +53,6 @@ alias python=/usr/bin/python3
 export AWS_VAULT_BACKEND=file
 
 # ------------------------------------------------------------------ secrets ---
-# Fill from your password manager. Never commit real values.
-# Google Chat webhook used by the git-pr-create skill.
-export GCHAT_PR_WEBHOOK_URL=''
-# mep-cms staging MCP server bearer token.
-export MEP_CMS_STAGING_MCP_TOKEN=''
+# This file is gitignored, so real tokens can live here:
+#   export SOME_TOKEN='value'
+# Keep them out of the repo, including out of this example.

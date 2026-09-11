@@ -47,8 +47,10 @@ fish — the other two ship with fish itself. That is the whole overlap.
 | oh-my-zsh `git` plugin | not used | the aliases above replace it, so both shells get *your* aliases rather than oh-my-zsh's |
 
 Plugin manager: oh-my-zsh on macOS, [Fisher](https://github.com/jorgebucaran/fisher)
-on WSL. `shell/fish/fish_plugins` is Fisher's lockfile and is intentionally
-near-empty — see the note in that file.
+on WSL. `shell/fish/fish_plugins` is Fisher's lockfile and holds only Fisher
+itself, which manages itself. It carries no comments on purpose: `fisher update`
+rewrites the file from scratch and would strip them. Add a plugin there only
+when it has a real equivalent in the zsh setup, so the two shells do not drift.
 
 ## Deliberately NOT shared
 
