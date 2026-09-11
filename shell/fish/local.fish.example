@@ -24,8 +24,6 @@ end
 # fish_add_path "/mnt/c/Users/YOUR_WINDOWS_USER/AppData/Local/Programs/Microsoft VS Code/bin"
 
 # ------------------------------------------------------------------ secrets ---
-# Fill from your password manager. Never commit real values.
-# Google Chat webhook used by the git-pr-create skill.
-set -gx GCHAT_PR_WEBHOOK_URL ''
-# mep-cms staging MCP server bearer token.
-set -gx MEP_CMS_STAGING_MCP_TOKEN ''
+# This file is gitignored, so real tokens can live here:
+#   set -gx SOME_TOKEN 'value'
+# Keep them out of the repo, including out of this example.
