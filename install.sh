@@ -36,6 +36,11 @@ say "Platform: $PLATFORM"
 [[ "$PLATFORM" == unknown ]] && die "Unsupported platform, aborting."
 
 # ------------------------------------------------------------ link helper ---
+# Symlinks, except under /mnt/* (the Windows drive seen from WSL). A symlink
+# created there is a WSL-only construct: `ln -s` succeeds, but Windows-side
+# VS Code cannot follow it and silently falls back to empty settings. Those
+# destinations get a real copy instead, so `git pull` there means re-running
+# this script.
 link() {
   local src="$1" dest="$2"
   local dir; dir="$(dirname "$dest")"
@@ -43,11 +48,20 @@ link() {
   if [[ -L "$dest" ]]; then
     run rm "$dest"
   elif [[ -e "$dest" ]]; then
-    warn "$dest exists — backing up to $dest.bak"
-    run mv "$dest" "$dest.bak"
+    if cmp -s "$src" "$dest"; then
+      run rm "$dest"            # identical copy from a previous run, no backup
+    else
+      warn "$dest exists — backing up to $dest.bak"
+      run mv "$dest" "$dest.bak"
+    fi
   fi
-  run ln -s "$src" "$dest"
-  (( DRY_RUN )) || say "linked $dest -> $src"
+  if [[ "$dest" == /mnt/* ]]; then
+    run cp "$src" "$dest"
+    (( DRY_RUN )) || say "copied $src -> $dest (Windows drive: no symlinks)"
+  else
+    run ln -s "$src" "$dest"
+    (( DRY_RUN )) || say "linked $dest -> $src"
+  fi
 }
 
 # ------------------------------------------------- vs code settings target ---
@@ -67,13 +81,15 @@ set_vscode_user_dir() {
       say "  1) Windows-side VS Code (Remote-WSL)  [default]"
       say "  2) VS Code Server inside this distro"
       local choice guess winuser
-      read -rp "  choice [1]: " choice
+      # `|| true`: read returns 1 at EOF (piped stdin), and `set -e` would
+      # otherwise abort the installer here without a message.
+      read -rp "  choice [1]: " choice || true
       if [[ "${choice:-1}" == "2" ]]; then
         VSCODE_DIR="$HOME/.vscode-server/data/Machine"
       else
         # cmd.exe is the reliable way to read the Windows username from WSL.
-        guess="$(cmd.exe /c 'echo %USERNAME%' 2>/dev/null | tr -d '\r\n' || true)"
-        read -rp "  Windows username [${guess}]: " winuser
+        guess="$(cmd.exe /c 'echo %USERNAME%' </dev/null 2>/dev/null | tr -d '\r\n' || true)"
+        read -rp "  Windows username [${guess}]: " winuser || true
         winuser="${winuser:-$guess}"
         [[ -n "$winuser" ]] || die "No Windows username given."
         VSCODE_DIR="/mnt/c/Users/$winuser/AppData/Roaming/Code/User"
@@ -129,8 +145,10 @@ else
   else
     say "local.fish already exists — left untouched"
   fi
-  if command -v fisher >/dev/null 2>&1; then
-    run fisher update
+  # Fisher is a fish *function*, not a binary — `command -v` from bash never
+  # sees it, so ask fish itself.
+  if fish -c 'functions -q fisher' 2>/dev/null; then
+    run fish -c 'fisher update'
   else
     warn "Fisher not installed — see README prerequisites."
   fi
