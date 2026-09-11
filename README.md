@@ -32,6 +32,13 @@ files are never touched.
 On WSL it asks whether VS Code runs on the Windows side (Remote-WSL) or as VS
 Code Server inside the distro, and reads your Windows username from `cmd.exe`.
 
+One exception to the symlinking: files that land on the Windows drive
+(`/mnt/c/...`, the Remote-WSL answer above) are **copied**. A symlink made from
+WSL there is a WSL-only construct — `ln -s` succeeds, but Windows-side VS Code
+cannot follow it and quietly falls back to no settings at all. So after a
+`git pull` that touches `vscode/`, re-run `./install.sh` on WSL to refresh the
+copies; on macOS and inside the distro the symlinks still update on their own.
+
 ## Prerequisites
 
 Install these before running `install.sh` — it warns instead of failing if one
