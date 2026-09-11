@@ -47,6 +47,11 @@
   // Window
   "window.commandCenter": false,
   "window.autoDetectColorScheme": false,
+  // Windows-only, ignored elsewhere: lets Windows-side VS Code open folders
+  // under \\wsl.localhost without a security prompt on every launch.
+  "security.allowedUNCHosts": [
+    "wsl.localhost"
+  ],
   // Files
   "files.associations": {
     ".env.*": "dotenv",
