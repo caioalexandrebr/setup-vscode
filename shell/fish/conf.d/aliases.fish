@@ -13,6 +13,7 @@ if status is-interactive
     # ----------------------------------------------------------------------- git ---
     abbr -a gs 'git status'
     abbr -a gl 'git log'
+    abbr -a gd 'git diff'
     abbr -a glg "git log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all"
     abbr -a gaa 'git add .'
     abbr -a gpb 'git push --set-upstream origin HEAD'

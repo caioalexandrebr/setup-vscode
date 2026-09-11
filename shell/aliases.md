@@ -15,6 +15,7 @@ gitignored.
 | `gym`  | `cd ~/dev/gympass/` | |
 | `gs`   | `git status` | |
 | `gl`   | `git log` | |
+| `gd`   | `git diff` | |
 | `glg`  | `git log --graph --decorate --all` (pretty) | quoting differs per shell |
 | `gaa`  | `git add .` | |
 | `gpb`  | `git push --set-upstream origin HEAD` | |
