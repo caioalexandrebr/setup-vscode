@@ -12,9 +12,6 @@ gitignored.
 
 | Alias | Command | Note |
 | --- | --- | --- |
-| `gym`  | `cd ~/dev/wellhub` | |
-| `dev`  | `cd ~/dev/wellhub` | same as `gym` |
-| `well` | `cd ~/dev/wellhub` | same as `gym` |
 | `gs`   | `git status` | |
 | `gl`   | `git log` | |
 | `gd`   | `git diff` | |

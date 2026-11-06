@@ -95,7 +95,7 @@ Node is managed with **fnm**, using `--use-on-cd` — same as on macOS.
 [`shell/aliases.md`](shell/aliases.md) is the canonical list. Add an alias there
 first, then to `shell/zsh/.zshrc` and `shell/fish/conf.d/aliases.fish`.
 
-Shared: the git and gh aliases, `gym`/`dev`/`well`, `c.`, `unlink`, and
+Shared: the git and gh aliases, `c.`, `unlink`, and
 `clear`-with-scrollback.
 
 Not shared, on purpose:

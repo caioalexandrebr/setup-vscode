@@ -63,11 +63,6 @@ alias ghd='gh pr create --draft --fill'
 alias ghv='gh pr view --web'
 alias ghb='gh browse'
 
-# navigation
-alias gym='cd ~/dev/wellhub'
-alias dev='cd ~/dev/wellhub'
-alias well='cd ~/dev/wellhub'
-
 # vscode
 alias c.='code .'
 

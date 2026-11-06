@@ -16,6 +16,10 @@
 # export CURL_CA_BUNDLE="$CA"
 # export AWS_CA_BUNDLE="$CA"
 
+# ------------------------------------------------------------- navigation ---
+# Shortcuts to work folders, e.g.:
+# alias work='cd ~/dev/my-company'
+
 # ---------------------------------------------------------- internal tools ---
 # Aliases and helper functions for company-internal CLIs, e.g.:
 # alias xyz='some-internal-cli run'
