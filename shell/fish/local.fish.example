@@ -11,9 +11,8 @@ fish_add_path "$HOME/bin"
 fish_add_path "$HOME/.local/bin"
 
 # ---------------------------------------------------------------- node (fnm) ---
-# WSL uses fnm; macOS uses nvm. Not shared on purpose — see shell/aliases.md.
-# `--use-on-cd` is fnm's built-in equivalent of the load-nvmrc hook on macOS:
-# it switches Node automatically when you cd into a dir with .nvmrc/.node-version.
+# fnm on both machines. `--use-on-cd` switches Node automatically when you cd
+# into a dir with .nvmrc/.node-version.
 if command -q fnm
     fnm env --use-on-cd --shell fish | source
 end

@@ -7,10 +7,10 @@
 # Aliases live in conf.d/aliases.fish, which fish sources before this file.
 # Nothing here needs to load them.
 #
-# Two things are per-shell on purpose: the prompt (fish keeps whatever
-# `fish_config` set, in the uncommitted fish_variables) and the Node manager
-# (fnm here, nvm on macOS). fish also ships autosuggestions and syntax
-# highlighting built in, so the two oh-my-zsh plugins need no counterpart.
+# The prompt is per-shell on purpose: fish keeps whatever `fish_config` set, in
+# the uncommitted fish_variables (macOS uses Starship). Node is fnm on both.
+# fish also ships autosuggestions and syntax highlighting built in, so those two
+# zsh plugins need no counterpart.
 
 if status is-interactive
     set -gx EDITOR "code -w"

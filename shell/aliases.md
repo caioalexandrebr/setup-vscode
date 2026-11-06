@@ -12,7 +12,9 @@ gitignored.
 
 | Alias | Command | Note |
 | --- | --- | --- |
-| `gym`  | `cd ~/dev/gympass/` | |
+| `gym`  | `cd ~/dev/wellhub` | |
+| `dev`  | `cd ~/dev/wellhub` | same as `gym` |
+| `well` | `cd ~/dev/wellhub` | same as `gym` |
 | `gs`   | `git status` | |
 | `gl`   | `git log` | |
 | `gd`   | `git diff` | |
@@ -21,6 +23,10 @@ gitignored.
 | `gpb`  | `git push --set-upstream origin HEAD` | |
 | `gc`   | `git checkout` | |
 | `gcb`  | `git checkout -b` | |
+| `ghpr` | `gh pr create` | |
+| `ghd`  | `gh pr create --draft --fill` | |
+| `ghv`  | `gh pr view --web` | |
+| `ghb`  | `gh browse` | |
 | `c.`   | `code .` | |
 | `unlink` | `rm -rf ~/.config/yarn/link/*` | |
 
@@ -36,16 +42,21 @@ Same intent, different name or implementation. Kept symmetrical on purpose.
 
 ## Plugins
 
-Only three things are configured in zsh, and only one of them needs a plugin in
-fish — the other two ship with fish itself. That is the whole overlap.
+zsh plugins come from Homebrew (see the `Brewfile`) and are sourced directly in
+`.zshrc` — no plugin manager. Two of them are built into fish.
 
 | zsh | fish | how |
 | --- | --- | --- |
 | `zsh-autosuggestions` | built in | nothing to install |
 | `zsh-syntax-highlighting` | built in | nothing to install |
-| oh-my-zsh `git` plugin | not used | the aliases above replace it, so both shells get *your* aliases rather than oh-my-zsh's |
+| `zsh-completions` | mostly built in | fish ships completions for most tools |
+| `fzf-tab` (Tab opens fzf) | not used | zsh-only |
+| `zsh-you-should-use` (alias reminders) | not used | fish `abbr` already expands in place |
 
-Plugin manager: oh-my-zsh on macOS, [Fisher](https://github.com/jorgebucaran/fisher)
+The prompt (Starship), zoxide, fzf and eza are tools, not plugins, and only the
+macOS side wires them up today.
+
+Plugin manager: none on macOS, [Fisher](https://github.com/jorgebucaran/fisher)
 on WSL. `shell/fish/fish_plugins` is Fisher's lockfile and holds only Fisher
 itself, which manages itself. It carries no comments on purpose: `fisher update`
 rewrites the file from scratch and would strip them. Add a plugin there only
