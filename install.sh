@@ -99,6 +99,22 @@ set_vscode_user_dir() {
   [[ -n "$VSCODE_DIR" ]] || die "Could not determine the VS Code User directory."
 }
 
+# --------------------------------------------------------------- homebrew ---
+# macOS only: apps, fonts and CLI tools come from the Brewfile. Runs first so
+# `code`, the fonts and the shell plugins exist before anything points at them.
+if [[ "$PLATFORM" == macos ]]; then
+  if command -v brew >/dev/null 2>&1; then
+    say "Installing Brewfile packages"
+    # `|| warn`: one failing formula (e.g. the untrusted Atlassian tap) must
+    # not stop the rest of the install.
+    run brew bundle --file="$REPO/Brewfile" || warn "brew bundle had failures — see above (Atlassian tap: brew trust --formula atlassian/acli/acli)"
+    # zsh-completions lives under share/; compinit refuses group-writable dirs.
+    run chmod go-w "$(brew --prefix)/share" || true
+  else
+    warn "Homebrew not installed — see README prerequisites. Skipping Brewfile."
+  fi
+fi
+
 set_vscode_user_dir
 say "VS Code User dir: $VSCODE_DIR"
 link "$REPO/vscode/settings.json"    "$VSCODE_DIR/settings.json"
@@ -122,13 +138,36 @@ fi
 # zsh on macOS, fish on Linux/WSL. Each keeps its own theme by design.
 if [[ "$PLATFORM" == macos ]]; then
   say "Shell: zsh"
-  [[ -d "$HOME/.oh-my-zsh" ]] || warn "oh-my-zsh not installed — see README prerequisites."
-  link "$REPO/shell/zsh/.zshrc" "$HOME/.zshrc"
+  command -v starship >/dev/null 2>&1 || warn "starship not installed — run: brew bundle --file=Brewfile"
+  link "$REPO/shell/zsh/.zprofile" "$HOME/.zprofile"
+  link "$REPO/shell/zsh/.zshrc"    "$HOME/.zshrc"
+  link "$REPO/ghostty/config"      "$HOME/.config/ghostty/config"
   if [[ ! -f "$HOME/.zshrc.local" ]]; then
     say "Seeding ~/.zshrc.local from the example (fill in paths + secrets)"
     run cp "$REPO/shell/zsh/.zshrc.local.example" "$HOME/.zshrc.local"
   else
     say "~/.zshrc.local already exists — left untouched"
+  fi
+
+  # GitHub CLI aliases (stored in gh's own config, so set them here, not in zsh).
+  if command -v gh >/dev/null 2>&1; then
+    say "Setting gh aliases"
+    run gh alias set --clobber co      'pr checkout'
+    run gh alias set --clobber prs     'pr list --author "@me"'
+    run gh alias set --clobber reviews 'pr list --search "review-requested:@me" --state open'
+    run gh alias set --clobber st      'pr status'
+    run gh alias set --clobber ck      'pr checks --watch'
+    run gh alias set --clobber web     'pr view --web'
+    run gh alias set --clobber draft   'pr create --draft --fill'
+    run gh config set editor "code -w"
+  fi
+
+  # Colima's Homebrew docker CLI finds the compose plugin only via this setting.
+  # Written once and never overwritten: config.json also holds registry auth.
+  if [[ ! -f "$HOME/.docker/config.json" ]]; then
+    say "Writing ~/.docker/config.json (compose plugin path)"
+    run mkdir -p "$HOME/.docker"
+    (( DRY_RUN )) || printf '{\n  "cliPluginsExtraDirs": ["%s/lib/docker/cli-plugins"]\n}\n' "$(brew --prefix)" > "$HOME/.docker/config.json"
   fi
 else
   say "Shell: fish"

@@ -20,6 +20,12 @@ if status is-interactive
     abbr -a gc 'git checkout'
     abbr -a gcb 'git checkout -b'
 
+    # ---------------------------------------------------------------- github cli ---
+    abbr -a ghpr 'gh pr create'
+    abbr -a ghd 'gh pr create --draft --fill'
+    abbr -a ghv 'gh pr view --web'
+    abbr -a ghb 'gh browse'
+
     # -------------------------------------------------------------------- vscode ---
     abbr -a c. 'code .'
 

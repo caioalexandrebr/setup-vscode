@@ -11,8 +11,10 @@ vscode/
   extensions.txt         output of `code --list-extensions`
 shell/
   aliases.md             canonical alias + plugin list — the source of truth
-  zsh/                   macOS
+  zsh/                   macOS (.zshrc, .zprofile, .zshrc.local.example)
   fish/                  WSL / Ubuntu
+ghostty/config           macOS terminal
+Brewfile                 macOS apps, fonts and CLI tools
 install.sh               detects macOS / Linux / WSL and symlinks everything
 ```
 
@@ -28,6 +30,11 @@ cd ~/dev/setup-vscode
 It symlinks instead of copying, so `git pull` here updates the live config.
 Anything it would overwrite is moved to `*.bak` first, and your machine-local
 files are never touched.
+
+On macOS it also runs `brew bundle` on the `Brewfile`, links `.zprofile`,
+`.zshrc` and the Ghostty config, sets the `gh` aliases, and writes
+`~/.docker/config.json` once (only if it does not exist yet) so Colima's docker
+CLI finds the compose plugin.
 
 On WSL it asks whether VS Code runs on the Windows side (Remote-WSL) or as VS
 Code Server inside the distro, and reads your Windows username from `cmd.exe`.
@@ -51,16 +58,27 @@ is missing.
 
 **macOS**
 
-```bash
-brew install --cask font-fira-code
-brew install jq
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-git clone https://github.com/zsh-users/zsh-autosuggestions ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions
-git clone https://github.com/zsh-users/zsh-syntax-highlighting ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
-```
+Only [Homebrew](https://brew.sh) — everything else is in the `Brewfile`, which
+`install.sh` runs for you:
 
-Node is managed with **nvm**, plus a `chpwd` hook that runs `nvm use` when you
-enter a directory with a `.nvmrc`.
+- **Terminal:** Ghostty + zsh, Starship prompt, zsh-autosuggestions,
+  zsh-syntax-highlighting, zsh-completions, fzf-tab, zsh-you-should-use, fzf,
+  zoxide, eza
+- **Dev:** fnm (Node), gh, Atlassian CLI (`acli`), pipx, Claude Code
+- **Apps:** VS Code, Bruno (API client), Colima + docker + docker-compose
+- **Fonts:** Fira Code (editor), FiraCode Nerd Font (VS Code terminal),
+  JetBrains Mono (Ghostty)
+
+The Atlassian tap is third-party, so newer Homebrew asks you to trust it once:
+`brew trust --formula atlassian/acli/acli`.
+
+Node is managed with **fnm** `--use-on-cd`, the same as on WSL. yarn and pnpm
+come from **corepack** (`corepack enable` once per Node version; Node 25+ needs
+`npm install -g corepack` first), which reads the version pinned in each
+project's `packageManager`.
+
+After installing, a few things are logins only you can do: `gh auth login`,
+`acli jira auth login --web`, and `colima start` whenever you need containers.
 
 **WSL / Ubuntu**
 
@@ -70,34 +88,37 @@ curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fi
 curl -fsSL https://fnm.vercel.app/install | bash
 ```
 
-Node is managed with **fnm**, using `--use-on-cd` — fnm's built-in equivalent of
-the nvm hook above.
+Node is managed with **fnm**, using `--use-on-cd` — same as on macOS.
 
 ## How the two shells stay in sync
 
 [`shell/aliases.md`](shell/aliases.md) is the canonical list. Add an alias there
 first, then to `shell/zsh/.zshrc` and `shell/fish/conf.d/aliases.fish`.
 
-Shared: the git aliases, `gym`, `c.`, `unlink`, and `clear`-with-scrollback.
+Shared: the git and gh aliases, `c.`, `unlink`, and
+`clear`-with-scrollback.
 
 Not shared, on purpose:
 
 | | macOS | WSL |
 | --- | --- | --- |
-| shell | zsh + oh-my-zsh | fish + Fisher |
-| Node | nvm + `chpwd` hook | fnm `--use-on-cd` |
-| prompt | `robbyrussell` | whatever `fish_config` is set to |
-| plugins | zsh-autosuggestions, zsh-syntax-highlighting | *(both built into fish)* |
+| shell | zsh, plugins from Homebrew | fish + Fisher |
+| terminal | Ghostty | not managed here |
+| Node | fnm `--use-on-cd` | fnm `--use-on-cd` |
+| prompt | Starship | whatever `fish_config` is set to |
+| plugins | autosuggestions, syntax-highlighting, completions, fzf-tab, you-should-use | *(the first two are built into fish)* |
 
-**Environment variables are never shared.** They are on-demand, per-machine
-facts — the Mac has Java, Go, the Android SDK and aws-vault; the WSL box has
-none of them. Each machine declares its own in a local file:
+**Machine-specific config is never shared.** Corporate CA bundles,
+company-internal CLIs and their aliases, optional toolchains (Java, Go, Android,
+aws-vault) and secrets are per-machine facts. Each machine declares its own in a
+local file:
 
 - macOS — `~/.zshrc.local` (template: `shell/zsh/.zshrc.local.example`)
 - WSL — `~/.config/fish/local.fish` (template: `shell/fish/local.fish.example`)
 
-Both are gitignored and sourced last, so they can override anything. Secrets
-(webhooks, API tokens) live there too and never enter this repo.
+Both are gitignored. On macOS it is sourced just before the plugins, so it can
+override aliases and variables while syntax-highlighting still loads last.
+Secrets (webhooks, API tokens) live there too and never enter this repo.
 
 ## Extensions
 
